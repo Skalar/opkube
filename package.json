@@ -1,0 +1,52 @@
+{
+  "name": "opkube",
+  "version": "0.0.1",
+  "description": "CLI utility for transferring secrets betweeen Kubernetes and 1Password",
+  "author": "Trym Skaar",
+  "repository": "skalar/opkube",
+  "homepage": "https://github.com/skalar/opkube",
+  "license": "MIT",
+  "keywords": [
+    "1password",
+    "kubernetes",
+    "secrets"
+  ],
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "bin": {
+    "opkube": "./bin/opkube"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tslint -p . && tsc -p ./tsconfig.prod.json",
+    "clean": "find ./lib \\( -iname '*.js' -or -iname '*.d.ts' -or -iname '*.js.map' \\) | xargs rm",
+    "prepack": "yarn build",
+    "postpack": "yarn clean"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.js.map",
+    "lib/**/*.d.ts",
+    "bin/opkube",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "get-stdin": "^6.0.0",
+    "js-yaml": "^3.12.2",
+    "minimist": "^1.2.0",
+    "omelette": "^0.4.12",
+    "ora": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/get-stdin": "^5.0.1",
+    "@types/js-yaml": "^3.12.0",
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^11.9.5",
+    "@types/ora": "^3.1.0",
+    "tslint": "^5.13.0",
+    "typescript": "^3.3.3333"
+  }
+}

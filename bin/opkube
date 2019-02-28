@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const cli = require('../lib/cli').default
+const op = require('../lib/op')
+
+const omelette = require('omelette')
+
+if (require.main === module) {
+  process.on('unhandledRejection', e => {
+    throw e
+  })
+
+  const complete = omelette('opkube <command> <vault>')
+  complete.on('command', ({reply}) => reply(['from-vault', 'to-vault']))
+
+  complete.onAsync('vault', async ({reply}) => {
+    const vaults = await op.invoke('list vaults')
+    reply(vaults.map(v => v.name))
+  })
+
+  if (~process.argv.indexOf('--install-completion')) {
+    complete.setupShellInitFile()
+    return
+  }
+
+  if (~process.argv.indexOf('--uninstall-completion')) {
+    complete.cleanupShellInitFile()
+    return
+  }
+
+  complete.next(() => {
+    cli()
+  })
+
+  complete.init()
+}
